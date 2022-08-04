@@ -1,0 +1,17 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.employeeDetails {
+    border: 1px solid black;
+    margin: 5px 0px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addEmployee {
+    border: 1px solid black;
+}

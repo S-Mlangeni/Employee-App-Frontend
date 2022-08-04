@@ -1,0 +1,152 @@
+<p>index works!</p>
+<div *ngFor="let employee of employees">
+    <div class="employeeDetails">
+        <p>{{employee.first_name}}</p>
+        <p>{{employee.last_name}}</p>
+        <p>{{employee.contact_number}}</p>
+        <div class="buttons">
+            <button type="button" (click)="editData(employee)">Edit</button>
+            <button type="button" (click)="deleteData(employee.employee_id)">Delete</button>
+        </div>
+    </div>
+</div>
+
+<form class="addEmployee" [formGroup]="newEmployee" (ngSubmit)="submitData()">
+    <h1>New Employee</h1>
+    <p>Basic info</p>
+    <div class="basic_info">
+        <label>First Name</label>
+        <input type="text" formControlName="firstName">
+    </div>
+    <div class="basic_info">
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName">
+    </div>
+    <div class="basic_info">
+        <label>Contact Number</label>
+        <input type="text" formControlName="contactNumber">
+    </div>
+    <div class="basic_info">
+        <label>Email Address</label>
+        <input type="text" formControlName="emailAddress">
+    </div>
+    <div class="basic_info">
+        <label>Date of Birth</label>
+        <input type="text" formControlName="dateOfBirth">
+    </div>
+    <p>Address info</p>
+    <div class="address_info">
+        <label>Street Address</label>
+        <input type="text" formControlName="streetAddress">
+    </div>
+    <div class="address_info">
+        <label>City</label>
+        <input type="text" formControlName="city">
+    </div>
+    <div class="address_info">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode">
+    </div>
+    <div class="address_info">
+        <label>Country</label>
+        <input type="text" formControlName="country">
+    </div>
+    <p>Skills</p>
+    <div formArrayName="skills" *ngFor="let skill of skills.controls; let i=index">
+        <div class="skill" [formGroupName]="i">
+            <div class="skill_info">
+                <label>Skill</label>
+                <input type="text" formControlName="skill">
+            </div>
+            <div class="skill_info">
+                <label>Yrs Exp</label>
+                <input type="text" formControlName="yrsExp">
+            </div>
+            <div class="skill_info">
+                <label>Seniority Rating</label>
+                <input type="text" formControlName="seniorityRating">
+            </div>
+            <div class="skill_info" (click)="removeSkill(i)">
+                <button type="button">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="skill_info" (click)="addSkill()">
+        <button type="button">+ Add New Skill</button>
+    </div>
+    <div class="info_buttons">
+        <button type="submit">Add</button>
+        <button type="button">Cancel</button>
+    </div>
+</form>
+{{newEmployee.value | json}}
+
+<form class="editEmployee" [formGroup]="editEmployee" (ngSubmit)="updateData()">
+    <h1>Edit Employee</h1>
+    <p>Basic info</p>
+    <div class="basic_info">
+        <label>First Name</label>
+        <input type="text" formControlName="firstName_edit">
+    </div>
+    <div class="basic_info">
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName_edit">
+    </div>
+    <div class="basic_info">
+        <label>Contact Number</label>
+        <input type="text" formControlName="contactNumber_edit">
+    </div>
+    <div class="basic_info">
+        <label>Email Address</label>
+        <input type="text" formControlName="emailAddress_edit">
+    </div>
+    <div class="basic_info">
+        <label>Date of Birth</label>
+        <input type="text" formControlName="dateOfBirth_edit">
+    </div>
+    <p>Address info</p>
+    <div class="address_info">
+        <label>Street Address</label>
+        <input type="text" formControlName="streetAddress_edit">
+    </div>
+    <div class="address_info">
+        <label>City</label>
+        <input type="text" formControlName="city_edit">
+    </div>
+    <div class="address_info">
+        <label>Postal Code</label>
+        <input type="text" formControlName="postalCode_edit">
+    </div>
+    <div class="address_info">
+        <label>Country</label>
+        <input type="text" formControlName="country_edit">
+    </div>
+    <p>Skills</p>
+    <div formArrayName="skills_edit" *ngFor="let skill of skills_edit.controls; let i=index">
+        <div class="skill" [formGroupName]="i">
+            <div class="skill_info">
+                <label>Skill</label>
+                <input type="text" formControlName="skill">
+            </div>
+            <div class="skill_info">
+                <label>Yrs Exp</label>
+                <input type="text" formControlName="yrsExp">
+            </div>
+            <div class="skill_info">
+                <label>Seniority Rating</label>
+                <input type="text" formControlName="seniorityRating">
+            </div>
+            <div class="skill_info" (click)="removeSkill_edit(i)">
+                <button type="button">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="skill_info" (click)="addSkill_edit()">
+        <button type="button">+ Add New Skill</button>
+    </div>
+    <div class="info_buttons">
+        <button type="submit">Update</button>
+        <button type="button">Cancel</button>
+    </div>
+</form>
+{{editEmployee.value | json}}
