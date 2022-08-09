@@ -9,6 +9,7 @@ export class CrudService {
   readURL = "http://127.0.0.1:8000/api"; 
   addURL = "http://127.0.0.1:8000/api/add"; 
   deleteURL = "http://127.0.0.1:8000/api/delete"; 
+  updateURL = "http://127.0.0.1:8000/api/edit"; 
   
   constructor(private http: HttpClient) { }
 
@@ -22,5 +23,9 @@ export class CrudService {
 
   delete(delete_Data: any) {
     return this.http.post(this.deleteURL, delete_Data);
+  }
+
+  update(update_Data: any) {
+    return this.http.post(this.updateURL, update_Data);
   }
 }

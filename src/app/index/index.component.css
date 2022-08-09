@@ -5,13 +5,70 @@
 
 .employeeDetails {
     border: 1px solid black;
-    margin: 5px 0px;
+    margin: 10px 20px;
     padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 5px;
+}
+
+.employeeDetails button {
+    margin-left: 5px;
+    border-radius: 5px;
+    padding: 0px 5px;
 }
 
 .addEmployee {
+    display: none;
+}
+
+.addEmployee_show {
     border: 1px solid black;
+    background-color: white;
+    border-radius: 5px;
+    width: 360px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 10px;
+}
+
+.editEmployee {
+    display: none;
+}
+
+.editEmployee_show {
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 5px;
+    width: 360px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 10px;
+}
+
+.mainLoader {
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px;
+}
+
+.header button {
+    border-radius: 5px;
+    padding: 0px 5px;
+}
+
+.emptyArrayMsg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,152 +1,199 @@
-<p>index works!</p>
-<div *ngFor="let employee of employees">
-    <div class="employeeDetails">
-        <p>{{employee.first_name}}</p>
-        <p>{{employee.last_name}}</p>
-        <p>{{employee.contact_number}}</p>
-        <div class="buttons">
-            <button type="button" (click)="editData(employee)">Edit</button>
-            <button type="button" (click)="deleteData(employee.employee_id)">Delete</button>
+<div class="header">
+    <h1>Employee Application</h1>
+    <button type="button" (click)="addEmployeeBtn()">+ New Employee</button>
+</div>
+<div *ngIf="!mainLoader, else elseBlock_1" class="mainLoader">
+    <label>Loading...</label>
+</div>
+<ng-template #elseBlock_1>
+    <div *ngIf="emptyArray, else elseBlock_2" class="emptyArrayMsg">
+        <p>There is nothing here</p>
+        <p>Create a new employee by clicking the New Employee button to get started</p>
+    </div>
+</ng-template>
+<ng-template #elseBlock_2>
+    <div *ngFor="let employee of employees">
+        <div class="employeeDetails">
+            <p>{{employee.first_name}}</p>
+            <p>{{employee.last_name}}</p>
+            <p>{{employee.contact_number}}</p>
+            <div class="buttons">
+                <button type="button" (click)="editData(employee.employee_id)">
+                    <label *ngIf="editLoaderId != employee.employee_id, else elseBlock_edit">Edit</label>
+                    <ng-template #elseBlock_edit>
+                        <label >Editing...</label>
+                    </ng-template>
+                </button>
+                <button type="button" (click)="deleteData(employee.employee_id)">
+                    <label *ngIf="deleteLoaderId != employee.employee_id, else elseBlock_delete">Delete</label>
+                    <ng-template #elseBlock_delete>
+                        <label >Deleting...</label>
+                    </ng-template>
+                </button>
+            </div>
         </div>
     </div>
-</div>
+</ng-template>
 
-<form class="addEmployee" [formGroup]="newEmployee" (ngSubmit)="submitData()">
+<form #addForm="ngForm" [class]="addEmployeeClass" [formGroup]="newEmployee" (ngSubmit)="submitData()">
     <h1>New Employee</h1>
-    <p>Basic info</p>
-    <div class="basic_info">
+    <b>Basic info</b>
+    <div class="form-group basic_info">
         <label>First Name</label>
-        <input type="text" formControlName="firstName">
+        <input [class.is-invalid]="newEmployee.get('firstName')!.invalid && newEmployee.get('firstName')!.touched" type="text" class="form-control" formControlName="firstName">
+        <small [class.d-none]="newEmployee.get('firstName')!.valid || newEmployee.get('firstName')!.untouched" class="text-danger">First Name is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Last Name</label>
-        <input type="text" formControlName="lastName">
+        <input [class.is-invalid]="newEmployee.get('lastName')!.invalid && newEmployee.get('lastName')!.touched" type="text" class="form-control" formControlName="lastName">
+        <small [class.d-none]="newEmployee.get('lastName')!.valid || newEmployee.get('lastName')!.untouched" class="text-danger">Last Name is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Contact Number</label>
-        <input type="text" formControlName="contactNumber">
+        <input [class.is-invalid]="newEmployee.get('contactNumber')!.invalid && newEmployee.get('contactNumber')!.touched" type="text" class="form-control" formControlName="contactNumber">
+        <small [class.d-none]="newEmployee.get('contactNumber')!.valid || newEmployee.get('contactNumber')!.untouched" class="text-danger">Contact Number is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Email Address</label>
-        <input type="text" formControlName="emailAddress">
+        <input [class.is-invalid]="newEmployee.get('emailAddress')!.invalid && newEmployee.get('emailAddress')!.touched" type="text" class="form-control" formControlName="emailAddress">
+        <small [class.d-none]="newEmployee.get('emailAddress')!.valid || newEmployee.get('emailAddress')!.untouched" class="text-danger">Email Address is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Date of Birth</label>
-        <input type="text" formControlName="dateOfBirth">
+        <input [class.is-invalid]="newEmployee.get('dateOfBirth')!.invalid && newEmployee.get('dateOfBirth')!.touched" type="text" class="form-control" formControlName="dateOfBirth">
+        <small [class.d-none]="newEmployee.get('dateOfBirth')!.valid || newEmployee.get('dateOfBirth')!.untouched" class="text-danger">Date of Birth is required!</small>
     </div>
-    <p>Address info</p>
-    <div class="address_info">
+    <b>Address info</b>
+    <div class="form-group address_info">
         <label>Street Address</label>
-        <input type="text" formControlName="streetAddress">
+        <input [class.is-invalid]="newEmployee.get('streetAddress')!.invalid && newEmployee.get('streetAddress')!.touched" type="text" class="form-control" formControlName="streetAddress">
+        <small [class.d-none]="newEmployee.get('streetAddress')!.valid || newEmployee.get('streetAddress')!.untouched" class="text-danger">Street Address is required!</small>
     </div>
-    <div class="address_info">
+    <div class="form-group address_info">
         <label>City</label>
-        <input type="text" formControlName="city">
+        <input [class.is-invalid]="newEmployee.get('city')!.invalid && newEmployee.get('city')!.touched" type="text" class="form-control" formControlName="city">
+        <small [class.d-none]="newEmployee.get('city')!.valid || newEmployee.get('city')!.untouched" class="text-danger">City is required!</small>
     </div>
-    <div class="address_info">
+    <div class="form-group address_info">
         <label>Postal Code</label>
-        <input type="text" formControlName="postalCode">
+        <input [class.is-invalid]="newEmployee.get('postalCode')!.invalid && newEmployee.get('postalCode')!.touched" type="text" class="form-control" formControlName="postalCode">
+        <small [class.d-none]="newEmployee.get('postalCode')!.valid || newEmployee.get('postalCode')!.untouched" class="text-danger">Postal Code is required!</small>
     </div>
-    <div class="address_info">
+    <div class="form-group address_info">
         <label>Country</label>
-        <input type="text" formControlName="country">
+        <input [class.is-invalid]="newEmployee.get('country')!.invalid && newEmployee.get('country')!.touched" type="text" class="form-control" formControlName="country">
+        <small [class.d-none]="newEmployee.get('country')!.valid || newEmployee.get('country')!.untouched" class="text-danger">Country is required!</small>
     </div>
-    <p>Skills</p>
+    <b>Skills</b>
     <div formArrayName="skills" *ngFor="let skill of skills.controls; let i=index">
         <div class="skill" [formGroupName]="i">
-            <div class="skill_info">
+            <div class="form-group skill_info">
                 <label>Skill</label>
-                <input type="text" formControlName="skill">
+                <input type="text" class="form-control" formControlName="skill">
             </div>
-            <div class="skill_info">
+            <div class="form-group skill_info">
                 <label>Yrs Exp</label>
-                <input type="text" formControlName="yrsExp">
+                <input type="text" class="form-control" formControlName="yrsExp">
             </div>
-            <div class="skill_info">
+            <div class="form-group skill_info">
                 <label>Seniority Rating</label>
-                <input type="text" formControlName="seniorityRating">
+                <input type="text" class="form-control" formControlName="seniorityRating">
             </div>
-            <div class="skill_info" (click)="removeSkill(i)">
-                <button type="button">Delete</button>
+            <div class="form-group skill_info">
+                <button class="form-control" type="button" (click)="removeSkill(i)" style="margin-top: 5px; margin-bottom: 5px">Delete</button>
             </div>
         </div>
     </div>
-    <div class="skill_info" (click)="addSkill()">
-        <button type="button">+ Add New Skill</button>
+    <div class="form-group skill_info">
+        <button class="form-control" type="button" [style.display]="hideBtn ? 'none' : 'block'" (click)="addSkill()">+ Add New Skill</button>
     </div>
-    <div class="info_buttons">
-        <button type="submit">Add</button>
-        <button type="button">Cancel</button>
+    <div class="form-group info_buttons">
+        <button [disabled]="addForm.form.invalid" class="form-control" type="submit" style="margin-top: 10px">
+            <label *ngIf="!addLoader, else elseBlock">Add</label>
+            <ng-template #elseBlock>
+                <label >Adding...</label>
+            </ng-template>
+        </button>
+        <button class="form-control" type="button" (click)="cancelNewEmployee()">Cancel</button>
     </div>
 </form>
-{{newEmployee.value | json}}
 
-<form class="editEmployee" [formGroup]="editEmployee" (ngSubmit)="updateData()">
+<form #editForm="ngForm" [class]="editEmployeeClass" [formGroup]="editEmployee" (ngSubmit)="updateData()">
     <h1>Edit Employee</h1>
-    <p>Basic info</p>
-    <div class="basic_info">
+    <b>Basic info</b>
+    <div class="form-group basic_info">
         <label>First Name</label>
-        <input type="text" formControlName="firstName_edit">
+        <input [class.is-invalid]="editEmployee.get('firstName_edit')!.invalid && editEmployee.get('firstName_edit')!.touched" type="text" class="form-control" formControlName="firstName_edit">
+        <small [class.d-none]="editEmployee.get('firstName_edit')!.valid || editEmployee.get('firstName_edit')!.untouched" class="text-danger">First Name is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Last Name</label>
-        <input type="text" formControlName="lastName_edit">
+        <input [class.is-invalid]="editEmployee.get('lastName_edit')!.invalid && editEmployee.get('lastName_edit')!.touched" type="text" class="form-control" formControlName="lastName_edit">
+        <small [class.d-none]="editEmployee.get('lastName_edit')!.valid || editEmployee.get('lastName_edit')!.untouched" class="text-danger">Last Name is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Contact Number</label>
-        <input type="text" formControlName="contactNumber_edit">
+        <input [class.is-invalid]="editEmployee.get('contactNumber_edit')!.invalid && editEmployee.get('contactNumber_edit')!.touched" type="text" class="form-control" formControlName="contactNumber_edit">
+        <small [class.d-none]="editEmployee.get('contactNumber_edit')!.valid || editEmployee.get('contactNumber_edit')!.untouched" class="text-danger">Contact Number is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Email Address</label>
-        <input type="text" formControlName="emailAddress_edit">
+        <input [class.is-invalid]="editEmployee.get('emailAddress_edit')!.invalid && editEmployee.get('emailAddress_edit')!.touched" type="text" class="form-control" formControlName="emailAddress_edit">
+        <small [class.d-none]="editEmployee.get('emailAddress_edit')!.valid || editEmployee.get('emailAddress_edit')!.untouched" class="text-danger">Email Address is required!</small>
     </div>
-    <div class="basic_info">
+    <div class="form-group basic_info">
         <label>Date of Birth</label>
-        <input type="text" formControlName="dateOfBirth_edit">
+        <input [class.is-invalid]="editEmployee.get('dateOfBirth_edit')!.invalid && editEmployee.get('dateOfBirth_edit')!.touched" type="text" class="form-control" formControlName="dateOfBirth_edit">
+        <small [class.d-none]="editEmployee.get('dateOfBirth_edit')!.valid || editEmployee.get('dateOfBirth_edit')!.untouched" class="text-danger">Date of Birth is required!</small>
     </div>
-    <p>Address info</p>
-    <div class="address_info">
+    <b>Address info</b>
+    <div class="form-group address_info">
         <label>Street Address</label>
-        <input type="text" formControlName="streetAddress_edit">
+        <input [class.is-invalid]="editEmployee.get('streetAddress_edit')!.invalid && editEmployee.get('streetAddress_edit')!.touched" type="text" class="form-control" formControlName="streetAddress_edit">
+        <small [class.d-none]="editEmployee.get('streetAddress_edit')!.valid || editEmployee.get('streetAddress_edit')!.untouched" class="text-danger">Street Address is required!</small>
     </div>
-    <div class="address_info">
+    <div class="form-group address_info">
         <label>City</label>
-        <input type="text" formControlName="city_edit">
+        <input [class.is-invalid]="editEmployee.get('city_edit')!.invalid && editEmployee.get('city_edit')!.touched" type="text" class="form-control" formControlName="city_edit">
+        <small [class.d-none]="editEmployee.get('city_edit')!.valid || editEmployee.get('city_edit')!.untouched" class="text-danger">City is required!</small>
     </div>
-    <div class="address_info">
+    <div class="form-group address_info">
         <label>Postal Code</label>
-        <input type="text" formControlName="postalCode_edit">
+        <input [class.is-invalid]="editEmployee.get('postalCode_edit')!.invalid && editEmployee.get('postalCode_edit')!.touched" type="text" class="form-control" formControlName="postalCode_edit">
+        <small [class.d-none]="editEmployee.get('postalCode_edit')!.valid || editEmployee.get('postalCode_edit')!.untouched" class="text-danger">Postal Code is required!</small>
     </div>
-    <div class="address_info">
+    <div class="form-group address_info">
         <label>Country</label>
-        <input type="text" formControlName="country_edit">
+        <input [class.is-invalid]="editEmployee.get('country_edit')!.invalid && editEmployee.get('country_edit')!.touched" type="text" class="form-control" formControlName="country_edit">
+        <small [class.d-none]="editEmployee.get('country_edit')!.valid || editEmployee.get('country_edit')!.untouched" class="text-danger">Country is required!</small>
     </div>
-    <p>Skills</p>
+    <b>Skills</b>
     <div formArrayName="skills_edit" *ngFor="let skill of skills_edit.controls; let i=index">
         <div class="skill" [formGroupName]="i">
-            <div class="skill_info">
+            <div class="form-group skill_info">
                 <label>Skill</label>
-                <input type="text" formControlName="skill">
+                <input type="text" class="form-control" formControlName="skill">
             </div>
-            <div class="skill_info">
+            <div class="form-group skill_info">
                 <label>Yrs Exp</label>
-                <input type="text" formControlName="yrsExp">
+                <input type="text" class="form-control" formControlName="yrsExp">
             </div>
-            <div class="skill_info">
+            <div class="form-group skill_info">
                 <label>Seniority Rating</label>
-                <input type="text" formControlName="seniorityRating">
-            </div>
-            <div class="skill_info" (click)="removeSkill_edit(i)">
-                <button type="button">Delete</button>
+                <input type="text" class="form-control" formControlName="seniorityRating">
             </div>
         </div>
     </div>
-    <div class="skill_info" (click)="addSkill_edit()">
-        <button type="button">+ Add New Skill</button>
+    <div class="form-group skill_info" [style.display]="hideBtn_edit ? 'none' : 'block'" (click)="addSkill_edit()" style="margin-top: 5px">
+        <button class="form-control" type="button">+ Add New Skill</button>
     </div>
-    <div class="info_buttons">
-        <button type="submit">Update</button>
-        <button type="button">Cancel</button>
+    <div class="form-group info_buttons">
+        <button [disabled]="editForm.form.invalid" class="form-control" type="submit" style="margin-top: 10px">
+            <label *ngIf="!updateLoader, else elseBlock_edit">Update</label>
+            <ng-template #elseBlock_edit>
+                <label >Updating...</label>
+            </ng-template>
+        </button>
+        <button class="form-control" type="button" (click)="cancelUpdate()">Cancel</button>
     </div>
 </form>
-{{editEmployee.value | json}}
