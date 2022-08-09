@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CrudService {
 
-  readURL = "http://127.0.0.1:8000/api"; 
-  addURL = "http://127.0.0.1:8000/api/add"; 
-  deleteURL = "http://127.0.0.1:8000/api/delete"; 
-  updateURL = "http://127.0.0.1:8000/api/edit"; 
+  readURL = "https://employee-app-server1.herokuapp.com/api"; //"http://127.0.0.1:8000/api"; 
+  addURL = "https://employee-app-server1.herokuapp.com/api/add"; //"http://127.0.0.1:8000/api/add"; 
+  deleteURL = "https://employee-app-server1.herokuapp.com/api/delete";//"http://127.0.0.1:8000/api/delete"; 
+  updateURL = "https://employee-app-server1.herokuapp.com/api/edit";//"http://127.0.0.1:8000/api/edit"; 
   
   constructor(private http: HttpClient) { }
 
